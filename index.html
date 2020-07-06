@@ -1,259 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>acedys</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
-    
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss/dist/tailwind.min.css">
-
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
-
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://unpkg.com/tailwindcss@1.4.6/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
+<body x-data="imageGallery()" 
+      x-init="fetch('https://pixabay.com/api/?key=15819227-ef2d84d1681b9442aaa9755b8&q=woman+girl+food&image_type=all&per_page=52&')
+      .then(response => response.json())
+      .then(response => { images = response.hits })"
+      class="bg-white">
 
-<body class="antialiased" x-data="{ isOpen : false}">
+<div class="main">
+    <div class="px-4 sm:px-8 lg:px-16 xl:px-20 mx-auto">
 
-    <header style="padding-bottom: 15px;" class="header my-3 shadow-md">
-          <div class="container px-4 sm:px-8 lg:px-16 xl:px-20 mx-auto">
-                <div class="header-wrapper flex items-center justify-between">
+        <!-- hero -->
+        <div class="hero">
+            <!-- hero headline -->
+            <div class="hero-headline flex flex-col items-center justify-center pt-24 text-center">
+                <h1 class=" font-bold text-3xl text-gray-900">Stunning free images & royalty free stock</h1>
+                <p class=" font-base text-base text-gray-600">high quality stock images and videos shared by our talented community.</p>
+            </div>
 
-                    <div class="header-logo">
-                        <h1 class="font-semibold text-black leading-relaxed"><a href=""><img style="width: 100px;" src="ac.png"></a></h1>
+            <!-- image search box -->
+            <div class="box pt-6">
+                <div class="box-wrapper">
+
+                    <div class=" bg-white rounded flex items-center w-full p-3 shadow-sm border border-gray-200">
+                      <button @click="getImages()" class="outline-none focus:outline-none"><svg class=" w-5 text-gray-600 h-5 cursor-pointer" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
+                      <input type="search" name="" id="" @keydown.enter="getImages()" placeholder="search for images" x-model="q" class="w-full pl-4 text-sm outline-none focus:outline-none bg-transparent">
+                      <div class="select">
+                        <select name="" id="" x-model="image_type" class="text-sm outline-none focus:outline-none bg-transparent">
+                          <option value="all" selected>All</option>
+                          <option value="photo">Photo</option>
+                          <option value="illustration">Illustration</option>
+                          <option value="vector">Vector</option>
+                         </select>
+                      </div>
                     </div>
-
-                    <div class="toggle md:hidden">
-                        <button @click=" isOpen = true" @keydown.escape=" isOpen = false">
-                            <svg 
-                                class="h-6 w-6 fill-current text-black"
-                                fill="none" stroke-linecap="round" 
-                                stroke-linejoin="round" stroke-width="2" 
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M4 6h16M4 12h16M4 18h16"></path>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <navbar class="navbar hidden md:block">
-                        <ul class="flex space-x-8 text-sm font-semibold">
-                            <li><a href="index.html" class="active border-b-2 border-pink-500 pb-2">Home</a></li>
-                            <li><a href="blocks.html" class="hover:text-pink-500">Blocks</a></li>
-                            <li><a href="templates.html" class="hover:text-pink-500">Devmart</a></li>
-                            <li><a href="codehub.html" class="hover:text-pink-500">Code hub</a></li>
-                            <li><a href="devgroups.html" class="hover:text-pink-500">Dev groups</a></li>
-
-                            <li><a href="weblit.html" class="cta bg-black hover:bg-black px-3 py-2 rounded text-white font-normal"><b>Get started</b></a></li>
-                        </ul>
-                    </navbar>
-
-                </div>
-        </div>
-
-    </header>
-
-    <div class="hero py-16">
-        <div class="container px-4 sm:px-8 lg:px-16 xl:px-20 mx-auto">
-            <div class="hero-wrapper grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-
-                <div class="hero-text col-span-6">
-                    <h1 class=" font-bold text-4xl md:text-5xl max-w-xl text-gray-900 leading-tight">Welcome to acedys</h1>
-                    <hr class=" w-12 h-1 bg-pink-500 rounded-full mt-2">
-                    <div class="get-app flex space-x-5 mt-5 justify-center md:justify-start">
-                        <button class=" bg-black shadow-md px-5 py-2 rounded-lg flex items-center space-x-4">
-
-                         <a href="#">   <div class="text">
-                            <p style="font-size: 17px;" class=" text-xs font-semibold text-white">Sign up</p>
-                            </div></a>
-                        </button>
-                        <button class=" bg-black shadow-md px-5 py-2 rounded-lg flex items-center space-x-4">
-                            <div class="image">
-
-                         <a href="#">  <div class="text">
-                                <p style="font-size: 18px;" class="text-xs font-semibold text-white">Log in</p>
-                            </div>
-                         </a> 
-                        </button>
-
-                    </div>
-                </div>
-
-                <div class="hero-image col-span-6">
-
-
-<img src="ac.jpg">
-
-
-
-                 
+                  
                 </div>
             </div>
-              <section class="text-gray-700 body-font">
-  <div class="container px-1 py-20 mx-auto flex flex-col">
-    <div class="lg:w-6/6 mx-auto">
-      <div class="rounded-lg h-70 overflow-hidden">
-        <img alt="content" class="object-cover object-center h-full w-full" src="connect.png">
-      </div>
-      <div class="flex flex-col sm:flex-row mt-10">
-        <div class="sm:w-1/4 text-center sm:pr-8 sm:py-8">
-          <div class=" rounded-full inline-flex items-center justify-center">
 
-            <img style="width: 165px;" src="ac.png">
-          </div>
-          <div class="flex flex-col items-center text-center justify-center">
-            <h2 class="font-medium title-font mt-4 text-gray-900 text-lg">Try acedys beta</h2>
+            <section id="photos" class="my-5 grid grid-cols-1 md:grid-cols-4 gap-4">
+                <template x-for="image in images" :key="image.id">
+                  <a :href="image.largeImageURL" class="hover:opacity-75 " target="_new"><img class="w-full h-64 object-cover" :src="image.largeImageURL" :alt="image.tags" /></a>
+                </template>
+              </section>
 
-
-
-          </div>
         </div>
-        <div class="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-300 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
-          <p class="leading-relaxed text-lg mb-4">Nmap is a free and open-source network scanner created by Gordon Lyon. Nmap is used to discover hosts and services on a computer network by sending packets and analyzing the responses. Nmap provides a num</p>
-<div class="get-app flex space-x-5 mt-5 justify-center md:justify-start">
-                        <button class=" bg-white shadow-md px-1 py-2 rounded-lg flex items-center space-x-4">
 
-                         <a href="swagstore.html">   <div class="text">
-                            <p style="font-size: 15px;" class=" text-xs font-semibold text-gray-900">Swags</p>
-                            </div></a>
-                        </button>
-                        <button class=" bg-white shadow-md px-3 py-2 rounded-lg flex items-center space-x-4">
-                            <div class="image">
-
-                         <a href="learn.html">  <div class="text">
-                                <p style="font-size: 15px;" class="text-xs font-semibold text-gray-900">Learn</p>
-                            </div>
-                         </a> 
-                        </button>
-                          <button class="google bg-white shadow-md px-3 py-2 rounded-lg flex items-center space-x-4">
-                            <div class="image">
-
-                         <a href="freebies.html">  <div class="text">
-                                <p style="font-size: 15px;" class="text-xs font-semibold text-gray-900">Freebies</p>
-                            </div>
-                            </a> 
-                        </button>
-
-                    </div>
-
-
-                    <div class="get-app flex space-x-5 mt-5 justify-center md:justify-start">
-                        <button class=" bg-white shadow-md px-1 py-2 rounded-lg flex items-center space-x-4">
-
-                         <a href="swagstore.html">   <div class="text">
-                            <p style="font-size: 15px;" class=" text-xs font-semibold text-gray-900">Workshops</p>
-                            </div></a>
-                        </button>
-                        <button class=" bg-white shadow-md px-3 py-2 rounded-lg flex items-center space-x-4">
-                            <div class="image">
-
-                         <a href="learn.html">  <div class="text">
-                                <p style="font-size: 15px;" class="text-xs font-semibold text-gray-900">Internships</p>
-                            </div>
-                         </a> 
-                        </button>
-                          <button class="google bg-white shadow-md px-3 py-2 rounded-lg flex items-center space-x-4">
-                            <div class="image">
-
-                         <a href="freebies.html">  <div class="text">
-                                <p style="font-size: 15px;" class="text-xs font-semibold text-gray-900">book store</p>
-                            </div>
-                            </a> 
-                        </button>
-
-                    </div>
-          
-        </div>
-      </div>
+        <footer class="p-5 text-sm text-gray-600 text-center inline-flex items-center">
+          <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="heart" class="svg-inline--fa fa-heart fa-w-16 text-red-600 w-4 h-4 mr-4 align-middle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path></svg>
+          <span>Made by <a href="https://tailwindcss.com/" target="_new" class="text-teal-600 font-semibold">tailwindcss</a> & <a href="https://github.com/alpinejs/alpine" target="_new" class="text-teal-600 font-semibold">alpinejs</a></span>
+        </footer>
     </div>
-  </div>
-</section>
-        </div>
-    </div>
-        
-    <div class="mobile-navbar">         
-
-        <div class="navbar-wrapper fixed top-0 left-0 h-full bg-white z-30 w-64 shadow-lg p-5" 
-            x-show="isOpen" 
-            @click.away=" isOpen = false"
-            x-transition:enter="transition duration-300 -ml-64" 
-            x-transition:enter-start=""
-            x-transition:enter-end="transform translate-x-64"
-            x-transition:leave="transition duration-300"
-            x-transition:enter-start=""
-            x-transition:leave-end="transform -translate-x-64">
-            <div class="close">
-                <button class="absolute top-0 right-0 mt-4 mr-4" @click=" isOpen = false">
-                    <svg 
-                        class="w-6 h-6"
-                        fill="none" stroke-linecap="round" 
-                        stroke-linejoin="round" stroke-width="2" 
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-                </button>
-            </div>
-            <ul class="divide-y">
-                <li><a href="index.html" class="/my-4 inline-block active font-bold">Home</a></li>
-                <li><a href="blocks.html" class="my-4 inline-block hover:text-pink-500">Blocks</a></li>
-                <li><a href="templates.html" class="my-4 inline-block hover:text-pink-500">Templates</a></li>
-                <li><a href="codehub.html" class="my-4 inline-block hover:text-pink-500">Code hub</a></li>
-                <li><a href="weblit.html" class="my-8 w-full text-center font-semibold cta inline-block bg-pink-500 hover:bg-pink-600 px-3 py-2 rounded text-white font-normal">Weblit</a></li>
-            </ul>
-
-            <div class="follow">
-                <p class=" italic font-semibold">follow us:</p>
-                <div class="social flex space-x-5 mt-4 ">
-                    <a href="#">
-                        <svg 
-                            aria-hidden="true" focusable="false" 
-                            data-prefix="fab" data-icon="twitter" 
-                            class="h-5 w-5 fill-current text-gray-600" role="img" 
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                            <path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
-                        </svg>
-                    </a>
-                    <a href="#">
-                        <svg 
-                            aria-hidden="true" focusable="false" 
-                            data-prefix="fab" data-icon="facebook-f" 
-                            class="h-5 w-5 fill-current text-gray-600" role="img" 
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                            <path fill="currentColor" d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path>
-                        </svg>
-                    </a>
-                    <a href="#">
-                        <svg 
-                            aria-hidden="true" focusable="false" 
-                            data-prefix="fab" data-icon="instagram" 
-                            class="h-5 w-5 fill-current text-gray-600" role="img" 
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                            <path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path>
-                        </svg>
-                    </a>
-                    <a href="#">
-                        <svg 
-                            aria-hidden="true" focusable="false" 
-                            data-prefix="fab" data-icon="youtube" 
-                            class="h-5 w-5 fill-current text-gray-600" role="img" 
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-                            <path fill="currentColor" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
- 
- 
+</div>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js" defer></script>
+<script>
+    function imageGallery() {
+        return {
+          images: [],
+          api_key : "15819227-ef2d84d1681b9442aaa9755b8",
+          q: "",
+          image_type: "",
+          page: "",
+          per_page: 52,
+          getImages: async function() {
+            console.log("params", this.q, this.image_type);  
+            const response = await fetch(
+              `https://pixabay.com/api/?key=${this.api_key}&q=${
+                this.q
+              }&image_type=${this.image_type}&per_page=${this.per_page}&page=${this.page}`
+            );
+            const data = await response.json();
+            this.images = data.hits;
+          }
+        };
+      }
+</script>
 </body>
-
-
-
-</html>
+</html> 
